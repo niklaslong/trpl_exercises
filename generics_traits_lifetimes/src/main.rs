@@ -37,6 +37,10 @@ struct Point<T, U> {
     y: U,
 }
 
+struct ImportandExcerpt<'a> {
+    part: &'a str,
+}
+
 fn main() {
     let number_list = vec![10, 20, 30, 15, 12];
 
@@ -51,5 +55,44 @@ fn main() {
     println!("The largest char is {} and {}", result, result2);
 
     let wnw = Point { x: 5, y: "z" };
-    println!("wnw: {:?}", wnw)
+    println!("wnw: {:?}", wnw);
+
+    let string1 = String::from("qwert");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is: {}", result);
+
+    let novel = String::from("Call me. blabla ablalbaalbss");
+    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+
+    let i = ImportandExcerpt {
+        part: first_sentence,
+    };
+
+    let result2 = longest_with_an_announcement(string1.as_str(), string2, "heyo");
+
+    println!("{} - {}", i.part, result2)
+}
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+use std::fmt::Display;
+
+fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+where
+    T: Display,
+{
+    println!("announcement: {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
 }
